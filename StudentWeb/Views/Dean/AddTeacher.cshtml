@@ -1,0 +1,32 @@
+﻿@model StudentWeb.ViewModel.DeanViewModels.AddTeacherViewModel
+
+@{
+    ViewData["Title"] = "AddTeacher";
+}
+
+<h1>@Model.Title</h1>
+
+<h4>Свободные преподователи</h4>
+
+<hr />
+
+<div>
+    <div>
+        @foreach (var item in Model.Teachers)
+        {
+            <div>
+                <ul>
+                    <li>@item.Name</li>
+                    <li>@item.SurrName</li>
+                    <li>@Html.ActionLink("Добавить", "AddTeacherToCourse", "Dean", new {Model.CourseId, item.Id })</li>
+                </ul>
+            </div>
+            <br />
+        }
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

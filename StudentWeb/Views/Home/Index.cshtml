@@ -1,0 +1,129 @@
+﻿@model StudentWeb.ViewModel.HomeViewModels.HomeViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h4>Список студентов</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Имя
+                </th>
+                <th>
+                    Фамилия
+                </th>
+                <th>
+                    Средний бал
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.Name</td>
+                    <td>@student.SurrName</td>
+                    <td>@student.AverageRate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.PagedListPager(Model.Students, page => Url.Action("Index", new { page }))
+</div>
+<br />
+
+<div>
+    <h4>Список преподавателей</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Имя
+                </th>
+                <th>
+                    Количество студентов
+                </th>
+                <th>
+                    Курсы которые ведет
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Teachers)
+            {
+                <tr>
+                    <td>@student.Name</td>
+                    <td>@student.CountStudent</td>
+                    <td>
+                        @foreach (var item in student.CourseName)
+                        {
+                            @item
+                            <br />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+
+@if (User.IsInRole("dean"))
+{
+    <div>
+        <h4>Cписок преподавателей, предметы которых посещают все студенты </h4>
+        <ul>
+            @foreach (var student in Model.TeachersAllStudents)
+            {
+                <li>@student</li>
+            }
+        </ul>
+    </div>
+    <br />
+
+    <div>
+        <h4>Cписок студентов, чей средний балл выше среднего</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Имя
+                    </th>
+                    <th>
+                        Фамилия
+                    </th>
+                    <th>
+                        Средний бал
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.StudentsAvarageRateAbove)
+                {
+                    <tr>
+                        <td>@student.Name</td>
+                        <td>@student.SurrName</td>
+                        <td>@student.AverageRate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+
+    <div>
+        <h4>Преподавателеи, предметы которых посещают меньше всех студентов ТОП 3</h4>
+        <ul>
+            @foreach (var student in Model.TeachersLowStudents)
+            {
+                <li>@student</li>
+            }
+        </ul>
+    </div>
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<StudentWeb.ViewModel.TeacherViewModels.TeacherViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Мои курсы</h1>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Мои курсы
+                </th>
+                <th>
+                    Студенты на курсе
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <p>@item.Title</p>
+                        @Html.ActionLink("Добавить студентов", "AddStudent", new { item.IdCourse })
+                    </td>
+                    <td>
+                        @if (item.Students != null && item.Students.Count() > 0)
+                        {
+                            @foreach (var students in item.Students)
+                            {
+                                <div>
+                                    @students.Name
+                                    @students.SurrName
+                                    @Html.ActionLink("Поставить оценку", "AddRate", new { students.Id, item.IdCourse })
+                                    @Html.ActionLink("Удалить", "DeleteStudent", new { students.Id, item.IdCourse })
+                                    <br />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="font-weight-bold">На курсе еще нет студентов</p>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

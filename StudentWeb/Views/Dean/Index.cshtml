@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StudentWeb.ViewModel.DeanViewModels.DeanViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Курсы</h1>
+
+<p>
+    <a asp-action="CreateCourse">Добавить новый курс</a>
+</p>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Курсы
+                </th>
+                <th>
+                    Преподаватели которые ведут курс
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                        <br />
+                        @Html.ActionLink("Добавить преподавателей на курс", "AddTeacher", new { item.IdCourse })
+                    </td>
+                    <td>
+                        @foreach (var teacher in item.Teachers)
+                        {
+                            <div>
+                                @teacher.Name
+                                @teacher.SurrName
+                                @Html.ActionLink("Удалить", "DeleteTeacherFromCourse", new { item.IdCourse, teacher.Id })
+                                <br />
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

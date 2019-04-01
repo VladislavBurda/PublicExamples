@@ -1,0 +1,58 @@
+﻿@model StudentWeb.ViewModel.StudentViewModels.StudentViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Мои профиль</h1>
+
+<div>
+    Имя: @Html.Label(Model.Name)
+</div>
+<div>
+    Фамилия: @Html.Label(Model.SurrName)
+</div>
+<br />
+<div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Название курса
+                </th>
+                <th>
+                    Мои оценки
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Courses)
+            {
+                <tr>
+                    <td>
+                        @item.CourseName
+                    </td>
+                    <td>
+                        @if (item.Rate.Count() > 0)
+                        {
+                            foreach (var rate in item.Rate)
+                            {
+                                @rate
+                                <br />
+                            }
+                            <p>Средний балл @item.AverageRate</p>
+                        }
+                        else
+                        {
+                            <div class="font-italic">
+                                У вас еще нет оценок
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

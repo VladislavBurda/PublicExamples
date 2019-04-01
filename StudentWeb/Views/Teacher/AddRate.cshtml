@@ -1,0 +1,39 @@
+﻿@model StudentWeb.ViewModel.TeacherViewModels.UserRateViewModel
+
+@{
+    ViewData["Title"] = "AddRate";
+}
+
+<h1>Поставить оценку пользователю</h1>
+<h2>Имя курса: @Model.CourseName</h2>
+
+@using (Html.BeginForm("AddRate", "Teacher", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(modelItem => modelItem.CourseId)
+    @Html.HiddenFor(modelItem => modelItem.UserId)
+
+    <h4>@Model.Name @Model.SurrName</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <p>Текущие оценки</p>
+            @foreach (var item in Model.Rate)
+            {
+                <div>
+                    @item
+                </div>
+            }
+        </div>
+        <div>
+            @Html.TextBoxFor(modelItem => modelItem.AddRate)
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Добавить" class="btn btn-primary" />
+        </div>
+    </div>
+}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
